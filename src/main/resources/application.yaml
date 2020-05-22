@@ -1,0 +1,33 @@
+server:
+  port: 8002
+spring:
+  sleuth:
+    trace-id128: true
+    sampler:
+      probability: 1.0
+  application:    name: convertCurrencyms
+    
+eureka:
+  instance:
+    instanceId: ${spring.application.name}:${random.int}
+    leaseRenewalIntervalInSeconds: 2
+    leaseExpirationDurationInSeconds: 5
+    preferIpAddress: true
+    metadata-map:
+      zone: A
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    prefer-same-zone-eureka: true
+    serviceUrl:
+      defaultZone: ${convertCurrencyms.eureka.url:http://localhost:8761/eureka}
+
+feign:
+  hystrix:
+    enabled: true   
+        
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
