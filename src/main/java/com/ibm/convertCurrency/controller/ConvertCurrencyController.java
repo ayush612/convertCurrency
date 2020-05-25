@@ -23,7 +23,8 @@ public class ConvertCurrencyController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Double> convertCurrency(@RequestBody ConvertCurrencyRequest currencyRequest) {
 		System.out.println("currencyRequest - > " + currencyRequest.toString());
-		Double convertedAmount = 100 * currencyService.convertCurrency(currencyRequest);//currencyRequest.getAmount() * 100;
+		//Double convertedAmount = currencyRequest.getAmount() * currencyService.convertCurrency(currencyRequest);
+		Double convertedAmount = currencyRequest.getAmount() * currencyService.convertCurrencyLB(currencyRequest);
 		if (Objects.isNull(convertedAmount)) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
