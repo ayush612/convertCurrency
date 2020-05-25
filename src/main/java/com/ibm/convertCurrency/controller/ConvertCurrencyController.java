@@ -23,9 +23,31 @@ public class ConvertCurrencyController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Double> convertCurrency(@RequestBody ConvertCurrencyRequest currencyRequest) {
 		System.out.println("currencyRequest - > " + currencyRequest.toString());
-		//Double convertedAmount = currencyRequest.getAmount() * currencyService.convertCurrency(currencyRequest);
-		Double convertedAmount = currencyRequest.getAmount() * currencyService.convertCurrencyLB(currencyRequest);
+		Double convertedAmount = currencyRequest.getAmount() * currencyService.convertCurrency(currencyRequest);
+		//Double convertedAmount = currencyRequest.getAmount() * currencyService.convertCurrencyLB(currencyRequest);
 		//Double convertedAmount = currencyRequest.getAmount() * currencyService.convertCurrencyDiscovery(currencyRequest);
+		if (Objects.isNull(convertedAmount)) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<>(convertedAmount, HttpStatus.OK);
+		}
+	}
+	
+	@RequestMapping(path = "/v2", method = RequestMethod.POST)
+	public ResponseEntity<Double> convertCurrencyLB(@RequestBody ConvertCurrencyRequest currencyRequest) {
+		System.out.println("currencyRequest - > " + currencyRequest.toString());
+		Double convertedAmount = currencyRequest.getAmount() * currencyService.convertCurrencyLB(currencyRequest);
+		if (Objects.isNull(convertedAmount)) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<>(convertedAmount, HttpStatus.OK);
+		}
+	}
+	
+	@RequestMapping(path = "/v3", method = RequestMethod.POST)
+	public ResponseEntity<Double> convertCurrencyDiscoveryClient(@RequestBody ConvertCurrencyRequest currencyRequest) {
+		System.out.println("currencyRequest - > " + currencyRequest.toString());
+		Double convertedAmount = currencyRequest.getAmount() * currencyService.convertCurrencyDiscovery(currencyRequest);
 		if (Objects.isNull(convertedAmount)) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
