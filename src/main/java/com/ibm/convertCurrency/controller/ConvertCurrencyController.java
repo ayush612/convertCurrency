@@ -25,6 +25,7 @@ public class ConvertCurrencyController {
 		System.out.println("currencyRequest - > " + currencyRequest.toString());
 		//Double convertedAmount = currencyRequest.getAmount() * currencyService.convertCurrency(currencyRequest);
 		Double convertedAmount = currencyRequest.getAmount() * currencyService.convertCurrencyLB(currencyRequest);
+		//Double convertedAmount = currencyRequest.getAmount() * currencyService.convertCurrencyDiscovery(currencyRequest);
 		if (Objects.isNull(convertedAmount)) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
