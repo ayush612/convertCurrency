@@ -18,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.ibm.convertCurrency.model.ConversionFactorResponse;
 import com.ibm.convertCurrency.model.ConvertCurrencyRequest;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @Component
 @RibbonClient(name = "manageCurrencyms")
@@ -39,13 +40,21 @@ public class CurrencyService {
 	@Autowired
 	private ManageCurrencyConversionProxy conversionProxy;
 
+	@HystrixCommand(fallbackMethod = "convertCurrencyFallback")
 	public Double convertCurrency(ConvertCurrencyRequest currencyRequest) {
 		ConversionFactorResponse response = conversionProxy.getConversionFactor(currencyRequest.getCountryCode());
 		if (Objects.nonNull(response)) {
 			return response.getConversionFactor();
 		}
+		return 1.0;
+	}
+	
+	public Double convertCurrencyFallback(ConvertCurrencyRequest currencyRequest) {
+		System.out.println("Fallback called returning default response");
 		return 0.0;
 	}
+	
+	
 
 	public Double convertCurrencyLB(ConvertCurrencyRequest currencyRequest) {
 		ServiceInstance instance = lbClient.choose("manageCurrencyms");
