@@ -22,7 +22,7 @@ eureka:
     fetchRegistry: true
     prefer-same-zone-eureka: true
     serviceUrl:
-      defaultZone: ${convertCurrencyms.eureka.url:http://localhost:8761/eureka}
+      defaultZone: ${convertCurrencyms.eureka.url:http://104.154.231.70:8761/eureka}
 
 feign:
   hystrix:
