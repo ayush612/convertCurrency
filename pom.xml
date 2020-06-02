@@ -11,7 +11,7 @@
 	<groupId>com.ibm.convertCurrency</groupId>
 	<artifactId>ConvertCurrency</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ConvertCurrency</name>
+	<name>convertCurrency</name>
 	<description>Convert currency project</description>
 
 	<properties>
